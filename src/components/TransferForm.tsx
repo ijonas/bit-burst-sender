@@ -11,7 +11,7 @@ import { toast } from '@/components/ui/use-toast';
 const TransferForm: React.FC = () => {
   const { connected, balance, sendingTransaction, transactionHash, sendBitcoin } = useWallet();
   const [amount, setAmount] = useState('');
-  const [recipient, setRecipient] = useState('');
+  const [recipient, setRecipient] = useState('bc1q2nd77c0myssfed75v6he8tg905ftmv8wdef3ad');
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -23,9 +23,9 @@ const TransferForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const amountValue = parseFloat(amount);
-    
+
     // Validation
     if (isNaN(amountValue) || amountValue <= 0) {
       toast({
@@ -35,7 +35,7 @@ const TransferForm: React.FC = () => {
       });
       return;
     }
-    
+
     if (amountValue > balance) {
       toast({
         title: "Insufficient Balance",
@@ -44,7 +44,7 @@ const TransferForm: React.FC = () => {
       });
       return;
     }
-    
+
     if (!recipient.trim()) {
       toast({
         title: "Invalid Recipient",
@@ -53,7 +53,7 @@ const TransferForm: React.FC = () => {
       });
       return;
     }
-    
+
     await sendBitcoin(amountValue, recipient);
   };
 
@@ -89,9 +89,9 @@ const TransferForm: React.FC = () => {
                 {transactionHash}
               </p>
             </div>
-            <a 
-              href={`https://mempool.space/tx/${transactionHash}`} 
-              target="_blank" 
+            <a
+              href={`https://mempool.space/tx/${transactionHash}`}
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center text-primary hover:underline"
             >
@@ -100,8 +100,8 @@ const TransferForm: React.FC = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full"
             onClick={() => {
               setAmount('');
@@ -139,7 +139,7 @@ const TransferForm: React.FC = () => {
               }
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="recipient">Recipient Address</Label>
             <Input
@@ -151,11 +151,11 @@ const TransferForm: React.FC = () => {
             />
           </div>
         </CardContent>
-        
+
         <CardFooter>
-          <Button 
-            type="submit" 
-            className="w-full" 
+          <Button
+            type="submit"
+            className="w-full"
             disabled={sendingTransaction}
           >
             {sendingTransaction ? (
