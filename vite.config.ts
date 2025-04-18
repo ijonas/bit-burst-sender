@@ -4,6 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -15,6 +16,10 @@ export default defineConfig(({ mode }) => ({
     react(),
     wasm(),
     topLevelAwait(),
+    nodePolyfills({
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    }),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
@@ -25,8 +30,6 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     'process.env': {},
-    // Fix "global is not defined" error
-    'global': 'window',
   },
   // This is the key part - provide the Buffer global for bitcoinjs-lib
   build: {
