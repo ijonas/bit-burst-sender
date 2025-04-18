@@ -286,10 +286,15 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         },
       );
 
-      console.log({ signedPSBTBytes })
-      psbt.validateSignaturesOfInput(0, validator);
-      psbt.finalizeAllInputs();
-      const finalisedPSBTHex = psbt.extractTransaction().toHex(); // broadcast this mofo at your own risk :-)
+      console.log({ signedPSBTBytes });
+      
+      // Create a new PSBT from the signed bytes returned by Phantom
+      const signedPsbt = bitcoin.Psbt.fromBuffer(Buffer.from(signedPSBTBytes), { network: bitcoin.networks.bitcoin });
+      
+      // Validate and finalize the signed PSBT
+      signedPsbt.validateSignaturesOfInput(0, validator);
+      signedPsbt.finalizeAllInputs();
+      const finalisedPSBTHex = signedPsbt.extractTransaction().toHex(); // broadcast this mofo at your own risk :-)
       const txHash = await broadcast(finalisedPSBTHex);
 
 

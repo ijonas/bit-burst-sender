@@ -28,7 +28,7 @@ const Index = () => {
         <footer className="border-t border-border/40 py-4">
           <div className="container max-w-3xl">
             <div className="text-center text-sm text-muted-foreground">
-              <p>This is a demo Bitcoin wallet interface. No real transactions are processed.</p>
+              <p>This is a demo Bitcoin wallet interface. However, the connections to Phantom and the block explorer are real and it will send real BTC. Your funds are at risk!</p>
             </div>
           </div>
         </footer>
